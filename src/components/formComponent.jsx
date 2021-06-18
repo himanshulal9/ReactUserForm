@@ -57,7 +57,7 @@ class FormComponent extends Component {
         <Grid item xs={12} sm={9}>
           <form onSubmit={handleSubmit} className={classes.form}>
             <Paper component={Box} mb={1} p={2}>
-              <Box pt={2}>
+              <Box pt={2} mt={1}>
                 {renderText({
                   type: "h6",
                   color: "primary",
@@ -115,7 +115,7 @@ class FormComponent extends Component {
                         onChange: handleOnChange,
                       })}
                     </CardContent>
-                    <p style={{ textAlign: "center" }}>
+                    <p style={{ textAlign: "center", padding: "0px 16px" }}>
                       <Button
                         type='submit'
                         color='primary'
