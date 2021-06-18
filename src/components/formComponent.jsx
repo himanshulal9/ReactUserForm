@@ -63,6 +63,7 @@ class FormComponent extends Component {
                   color: "primary",
                   label: "Simple User Form",
                   align: "center",
+                  gutterBottom: true,
                 })}
               </Box>
               <Grid container>
