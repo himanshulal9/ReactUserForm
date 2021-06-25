@@ -1,16 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  Box,
-  Grid,
-  Paper,
-  withStyles,
-  List,
-  Card,
-  ListItemText,
-  ListItemIcon,
-  ListItem,
-} from "@material-ui/core";
+import { Box, Grid, Paper, withStyles, Card } from "@material-ui/core";
 import { renderInputField, renderSelect, renderText } from "./common";
 import { styles } from "./styles";
 import { CardContent } from "@material-ui/core";

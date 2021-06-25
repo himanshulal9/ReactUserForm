@@ -1,9 +1,7 @@
 import { IconButton } from "@material-ui/core";
-import { CardHeader } from "@material-ui/core";
 import {
   makeStyles,
   Grid,
-  Box,
   Card,
   CircularProgress,
   CardContent,
@@ -20,6 +18,7 @@ export default function UploadedData() {
   const [fetched, setFetched] = useState(false);
   const [users, setUsers] = useState([]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const deleteData = (id) => {
     console.log("id:", id);
     db.collection("users")
