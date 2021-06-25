@@ -15,23 +15,21 @@ import { renderInputField, renderSelect, renderText } from "./common";
 import { styles } from "./styles";
 import { CardContent } from "@material-ui/core";
 import { Button } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
+import UploadedData from "./uploadedData";
 
 class FormComponent extends Component {
   state = {
     data: {
       firstName: "",
-      middleName: "",
       lastName: "",
+      email: "",
       gender: "",
-      suggession: "",
+      address: "",
     },
     errors: {},
-    uploadedData: [],
   };
   render() {
     const { classes } = this.props;
-
     const handleSubmit = (e) => {
       e.preventDefault();
       const { data, uploadedData } = this.state;
@@ -54,10 +52,10 @@ class FormComponent extends Component {
 
     return (
       <Grid container className={classes.formContainer}>
-        <Grid item xs={12} sm={9}>
+        <Grid item xs={12} sm={10}>
           <form onSubmit={handleSubmit} className={classes.form}>
-            <Paper component={Box} mb={1} p={2}>
-              <Box pt={2} mt={1}>
+            <Paper component={Box} mb={2} p={2}>
+              <Box>
                 {renderText({
                   type: "h6",
                   color: "primary",
@@ -70,7 +68,7 @@ class FormComponent extends Component {
                 <Grid item xs={12} sm={6}>
                   <Card>
                     <CardContent>
-                      <Box mt={1} mb={1}>
+                      <Box mb={2}>
                         {renderInputField({
                           name: "firstName",
                           label: "First Name",
@@ -79,23 +77,26 @@ class FormComponent extends Component {
                           onChange: handleOnChange,
                         })}
                       </Box>
-                      <Box mt={1} mb={1}>
+                      <Box mb={2}>
                         {renderInputField({
-                          name: "middleName",
-                          label: "Middle Name",
+                          name: "lastName",
+                          label: "Last Name",
                           type: "text",
                           state: this.state,
                           onChange: handleOnChange,
                         })}
                       </Box>
-                      {renderInputField({
-                        name: "lastName",
-                        label: "Last Name",
-                        type: "text",
-                        state: this.state,
-                        onChange: handleOnChange,
-                      })}
-                      <Box mt={1} mb={1}>
+
+                      <Box mb={2}>
+                        {renderInputField({
+                          name: "email",
+                          label: "Email@example.com",
+                          type: "email",
+                          state: this.state,
+                          onChange: handleOnChange,
+                        })}
+                      </Box>
+                      <Box mb={2}>
                         {renderSelect({
                           name: "gender",
                           label: "Gender",
@@ -109,14 +110,19 @@ class FormComponent extends Component {
                         })}
                       </Box>
                       {renderInputField({
-                        name: "suggession",
-                        label: "Suggession",
+                        name: "address",
+                        label: "Address",
                         type: "text",
                         state: this.state,
                         onChange: handleOnChange,
                       })}
                     </CardContent>
-                    <p style={{ textAlign: "center", padding: "0px 16px" }}>
+                    <p
+                      style={{
+                        textAlign: "center",
+                        padding: "0px 16px",
+                        margin: "0px",
+                      }}>
                       <Button
                         type='submit'
                         color='primary'
@@ -129,50 +135,9 @@ class FormComponent extends Component {
                   </Card>
                 </Grid>
 
+                {/* uploaded data  */}
                 <Grid item xs={12} sm={6}>
-                  {this.state.uploadedData.length ? (
-                    <Card>
-                      <CardContent>
-                        <List>
-                          {/* {Object.entries()} */}
-                          {this.state.uploadedData.map((item) =>
-                            Object.entries(item).map((obj, i) => (
-                              <ListItem key={i}>
-                                <ListItemIcon
-                                  style={{ textTransform: "uppercase" }}>
-                                  {obj[0] + " :-"}
-                                </ListItemIcon>
-                                <ListItemText
-                                  style={{
-                                    paddingLeft: "10px",
-                                    textTransform: "capitalize",
-                                  }}>
-                                  {obj[1]}
-                                </ListItemText>
-                              </ListItem>
-                            ))
-                          )}
-                        </List>
-                      </CardContent>
-                    </Card>
-                  ) : (
-                    <Box mb={3} mt={3} p={2}>
-                      <Typography
-                        variant='body2'
-                        color='secondary'
-                        align='center'
-                        gutterBottom={true}>
-                        No Data to Show
-                      </Typography>
-                      <Typography
-                        variant='body1'
-                        component='h6'
-                        color='textSecondary'
-                        align='center'>
-                        Submit Form To See Data
-                      </Typography>
-                    </Box>
-                  )}
+                  <UploadedData />
                 </Grid>
               </Grid>
             </Paper>
