@@ -121,7 +121,7 @@ class FormComponent extends Component {
                       style={{
                         textAlign: "center",
                         padding: "0px 16px",
-                        margin: "0px",
+                        margin: "10px 0px",
                       }}>
                       <Button
                         type='submit'

@@ -50,7 +50,11 @@ export default function UploadedData() {
   return (
     <div className={classes.uploadDataRoot}>
       <Grid container>
-        {users.length ? (
+        {users.length === 0 ? (
+          <Grid item xs={12}>
+            <Typography align='center'>No Data To Show</Typography>
+          </Grid>
+        ) : users.length > 0 ? (
           users.map((item, i) => (
             <Grid item xs={12} key={i}>
               <Card className={classes.cardData}>
@@ -72,7 +76,21 @@ export default function UploadedData() {
             </Grid>
           ))
         ) : (
-          <Box
+          <Grid
+            item
+            xs={12}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "100px",
+            }}>
+            <CircularProgress color='primary' />
+          </Grid>
+        )}
+        {/* {users.length === 0 ? (
+          
+        ) : (
+          <p
             style={{
               padding: "16px",
               height: "150px",
@@ -82,8 +100,8 @@ export default function UploadedData() {
               alignItems: "center",
             }}>
             <CircularProgress color='primary' />
-          </Box>
-        )}
+          </p>
+        )} */}
       </Grid>
       {/* <List dense={true}>
         {users.length ? (
