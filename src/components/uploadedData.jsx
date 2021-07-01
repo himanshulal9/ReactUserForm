@@ -1,57 +1,90 @@
-import { IconButton } from "@material-ui/core";
+import React, { useState } from "react";
 import {
+  Box,
   makeStyles,
   Grid,
   Card,
   CircularProgress,
   CardContent,
   Typography,
+  IconButton,
+  Button,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { db } from "../firebase";
 import { styles } from "./styles";
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
+import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
+import { deleteFirebaseItem } from "../databaseDriver";
+import { AlertDialog } from "./common";
+import { red } from "@material-ui/core/colors";
+import { toast } from "react-toastify";
+
 const useStyles = makeStyles(styles);
 
-export default function UploadedData() {
+export default function UploadedData({ users, setFetched }) {
   const classes = useStyles();
-  const [fetched, setFetched] = useState(false);
-  const [users, setUsers] = useState([]);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const deleteData = (id) => {
-    console.log("id:", id);
-    db.collection("users")
-      .doc(id)
-      .delete()
-      .then((res) => console.log("del_response", res));
+  const [currentId, setCurrentId] = useState("");
+  //for dialog Purpose
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  useEffect(() => {
-    !fetched &&
-      db
-        .collection("users")
-        .get()
-        .then(function (item) {
-          const userData = [];
-          const objItem = {};
-          item.forEach(function (doc) {
-            objItem.id = doc.id;
-            objItem.data = doc.data();
-            userData.push(objItem);
-          });
-          //updating the state
-          setUsers(userData);
-          setFetched(false);
-        });
-  }, [fetched, deleteData]);
+  const DialogContent = () => (
+    <Box>
+      <Typography align='center' gutterBottom={true}>
+        <ErrorOutlineOutlinedIcon
+          style={{ fontSize: "55px", color: red[500] }}
+        />
+      </Typography>
+      <Typography align='center' variant='h6' component='h5'>
+        Are You Sure To Delete ?
+      </Typography>
+    </Box>
+  );
+
+  //delete firebase item
+  const deleteItem = () => {
+    deleteFirebaseItem(currentId);
+    toast.success(`Deleted Successfully`);
+    setOpen(false);
+    setFetched(false);
+  };
 
   return (
     <div className={classes.uploadDataRoot}>
+      <AlertDialog
+        initialState={open}
+        content={<DialogContent />}
+        action={
+          <Box mt={2}>
+            <Button
+              onClick={handleClose}
+              variant='outlined'
+              color='default'
+              style={{ marginRight: "8px" }}>
+              Cancle
+            </Button>
+            <Button
+              onClick={deleteItem}
+              variant='contained'
+              color='secondary'
+              autoFocus>
+              Delete
+            </Button>
+          </Box>
+        }
+        handleClose={handleClose}
+      />
       <Grid container>
         {users.length === 0 ? (
           <Grid item xs={12}>
             <Typography align='center'>No Data To Show</Typography>
+            <Typography align='center' variant='subtitle2' color='error'>
+              Plz Add Data Through Form
+            </Typography>
           </Grid>
         ) : users.length > 0 ? (
           users.map((item, i) => (
@@ -61,15 +94,18 @@ export default function UploadedData() {
                   <IconButton
                     color='secondary'
                     className={classes.deletebutton}
-                    onClick={deleteData(item.id)}>
+                    onClick={() => {
+                      handleClickOpen();
+                      setCurrentId(item.id);
+                    }}>
                     <DeleteForeverOutlinedIcon />
                   </IconButton>
                   <Typography
                     variant='body1'
-                    component='h6'>{` ${item.data.firstName} ${item.data.lastName}`}</Typography>
-                  <Typography variant='body1'>{item.data.email}</Typography>
-                  <Typography variant='body2'>{item.data.gender}</Typography>
-                  <Typography variant='body2'>{item.data.address}</Typography>
+                    component='h6'>{` ${item.firstName} ${item.lastName}`}</Typography>
+                  <Typography variant='body1'>{item.email}</Typography>
+                  <Typography variant='body2'>{item.gender}</Typography>
+                  <Typography variant='body2'>{item.suggession}</Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -86,48 +122,7 @@ export default function UploadedData() {
             <CircularProgress color='primary' />
           </Grid>
         )}
-        {/* {users.length === 0 ? (
-          
-        ) : (
-          <p
-            style={{
-              padding: "16px",
-              height: "150px",
-              display: "flex",
-              flexFlow: "row wrap",
-              justifyContent: "center",
-              alignItems: "center",
-            }}>
-            <CircularProgress color='primary' />
-          </p>
-        )} */}
       </Grid>
-      {/* <List dense={true}>
-        {users.length ? (
-          users.map(({ data }) =>
-            Object.entries(data).map((obj, i) => (
-              <Box className={classes.dataDisplay}>
-                <ListItem>
-                  <ListItemIcon>{obj[0]}</ListItemIcon>
-                  <ListItemText>{obj[1]}</ListItemText>
-                </ListItem>
-              </Box>
-            ))
-          )
-        ) : (
-          <Box
-            style={{
-              padding: "16px",
-              height: "150px",
-              display: "flex",
-              flexFlow: "row wrap",
-              justifyContent: "center",
-              alignItems: "center",
-            }}>
-            <CircularProgress color='primary' />
-          </Box>
-        )}
-      </List> */}
     </div>
   );
 }

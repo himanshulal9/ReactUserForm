@@ -1,4 +1,13 @@
-import { Button, MenuItem, TextField, Typography } from "@material-ui/core";
+import {
+  Button,
+  MenuItem,
+  TextField,
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@material-ui/core";
 
 export const renderText = ({ type, label, color, ...rest }) => (
   <Typography variant={type} color={color} {...rest}>
@@ -6,8 +15,14 @@ export const renderText = ({ type, label, color, ...rest }) => (
   </Typography>
 );
 
-export const renderInputField = ({ name, label, type, state, onChange }) => {
-  const { data, errors } = state;
+export const renderInputField = ({
+  name,
+  label,
+  type,
+  data,
+  errors,
+  onChange,
+}) => {
   return (
     <TextField
       label={label}
@@ -24,8 +39,15 @@ export const renderInputField = ({ name, label, type, state, onChange }) => {
     />
   );
 };
-export const renderSelect = ({ name, label, options, state, onChange }) => {
-  const { data, errors } = state;
+
+export const renderSelect = ({
+  name,
+  label,
+  options,
+  data,
+  errors,
+  onChange,
+}) => {
   return (
     <TextField
       select
@@ -56,4 +78,22 @@ export const renderButton = ({ label, variant, color, fullWidth, onClick }) => (
     onClick={onClick}>
     {label}
   </Button>
+);
+
+export const AlertDialog = ({
+  initialState,
+  title,
+  content,
+  action,
+  handleClose,
+}) => (
+  <Dialog
+    open={initialState}
+    onClose={handleClose}
+    aria-labelledby={`${title}-title`}
+    aria-describedby={`${title}-description`}>
+    <DialogTitle id={title}>{title}</DialogTitle>
+    <DialogContent>{content}</DialogContent>
+    <DialogActions>{action}</DialogActions>
+  </Dialog>
 );

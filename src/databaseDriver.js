@@ -1,25 +1,30 @@
 import { db } from "./firebase";
+const collectionName = "users";
 
-//adding data
-const addUser = async (user) => {
-  try {
-    const userRef = await db.collection("users").add(user);
-    console.log("Document written with ID: ", userRef.id);
-    return userRef;
-  } catch (e) {
-    console.error("Error adding document: ", e);
-    throw e;
-  }
+// adding data to firebase
+export const AddData = (data) => db.collection(collectionName).add(data);
+
+//get realtime updated snapshort
+export const getSnapUpdate = ({ fx_RunOnUpdata }) =>
+  db.collection(collectionName).onSnapshot((realTimeData) => fx_RunOnUpdata);
+
+//getting data form firebase
+export const GetFirebaseData = ({ setUploadedData }) => {
+  const array = [];
+  let item;
+  db.collection(collectionName)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        item = doc.data();
+        item.id = doc.id;
+        array.push(item);
+      });
+      setUploadedData(array);
+    });
 };
 
-const getUsers = () => {
-  try {
-    db.collection("users")
-      .get()
-      .then((data) => console.log("addedDAta", data));
-  } catch (e) {
-    console.log("Error while getting data", e);
-  }
+export const deleteFirebaseItem = (id) => {
+  db.collection(collectionName).doc(id).delete();
 };
-
-export { addUser, getUsers };
