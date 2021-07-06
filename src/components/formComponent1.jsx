@@ -69,7 +69,7 @@ export default function FormComponent1() {
               {renderText({
                 type: "h6",
                 color: "primary",
-                label: "Simple User Form",
+                label: "Covid 19 FeedBack Form",
                 align: "center",
                 gutterBottom: true,
               })}

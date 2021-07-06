@@ -14,8 +14,8 @@ export default function Footer() {
             color='textSecondary'
             align='center'>
             Created with <FavoriteIcon color='secondary' /> All right Reserved{" "}
-            <a href='https://www.facebook.com/winnersujeet' target='blank'>
-              @SujeetGupta
+            <a href='http://www.manit.ac.in' target='blank'>
+              @MANIT
             </a>
           </Typography>
         </Box>

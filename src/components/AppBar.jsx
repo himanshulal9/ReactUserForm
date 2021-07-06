@@ -1,10 +1,15 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import EmojiFlagsIcon from "@material-ui/icons/EmojiFlags";
+import {
+  AppBar,
+  IconButton,
+  Toolbar,
+  Typography,
+  Button,
+  makeStyles,
+} from "@material-ui/core";
+import { indigo } from "@material-ui/core/colors";
+import BubbleChartOutlinedIcon from "@material-ui/icons/BubbleChartOutlined";
+import RssFeedIcon from "@material-ui/icons/RssFeed";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,18 +28,37 @@ export default function Navbar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position='fixed'>
+      <AppBar position='static' style={{ background: indigo["A400"] }}>
         <Toolbar>
-          <IconButton
-            edge='start'
-            className={classes.menuButton}
-            color='inherit'
-            aria-label='menu'>
-            <EmojiFlagsIcon />
-          </IconButton>
-          <Typography variant='h6' className={classes.title}>
-            React Form
+          <Typography variant='h6'>
+            <a
+              href='https://himanshulal9.github.io/React-covid19TrackerApp/'
+              style={{
+                textDecoration: "none",
+                color: "white",
+              }}>
+              {" "}
+              Covid19 Tracker{" "}
+            </a>
           </Typography>
+          <a
+            href='https://himanshulal9.github.io/ReactUserForm'
+            style={{
+              textDecoration: "none",
+              color: "white",
+              marginLeft: "auto",
+            }}>
+            <Button
+              variant='outlined'
+              color='default'
+              startIcon={<RssFeedIcon />}
+              style={{
+                color: "white",
+                borderColor: "white",
+              }}>
+              Feedback And Grievance
+            </Button>
+          </a>
         </Toolbar>
       </AppBar>
     </div>
