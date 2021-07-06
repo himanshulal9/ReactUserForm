@@ -30,6 +30,9 @@ export default function Navbar() {
     <div className={classes.root}>
       <AppBar position='static' style={{ background: indigo["A400"] }}>
         <Toolbar>
+          <IconButton edge='start' color='inherit' aria-label='menu'>
+            <BubbleChartOutlinedIcon />
+          </IconButton>
           <Typography variant='h6'>
             <a
               href='https://himanshulal9.github.io/React-covid19TrackerApp/'
